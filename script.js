@@ -5,12 +5,12 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-var canvas = document.querySelector('#canvas-overlay');
+var canvas = document.querySelector('#canvas');
 var canvasContext = canvas.getContext('2d');
 
 const SQAURE_SIZE = 10;
-let ws = Math.floor(canvas.width / SQAURE_SIZE);
-let hs = Math.floor(canvas.height / SQAURE_SIZE);
+let ws = Math.floor(window.innerWidth / SQAURE_SIZE) + 1;
+let hs = Math.floor(window.innerHeight / SQAURE_SIZE) + 1;
 let fire = new Uint8ClampedArray(ws * hs);
 
 function init() {
@@ -24,8 +24,12 @@ function resizeCanvases() {
   canvas.width = canvas.width = window.innerWidth;
   canvas.height = canvas.height = window.innerHeight;
 
-  ws = Math.floor(canvas.width / SQAURE_SIZE);
-  hs = Math.floor(canvas.height / SQAURE_SIZE);
+  
+  canvas.style.top = 0;
+  canvas.style.left = 0;
+
+  ws = Math.floor(canvas.width / SQAURE_SIZE) + 1;
+  hs = Math.floor(canvas.height / SQAURE_SIZE) + 1;
   fire = new Uint8ClampedArray(ws * hs);
 }
 
@@ -95,7 +99,7 @@ function tick() {
     for (let x = 0; x < ws; x += 1){
       let c = colors[fire[y * ws + x]];
       canvasContext.fillStyle = `rgba(${c[0]}, ${c[1]}, ${c[2]}, 255)`;
-      canvasContext.fillRect(Math.floor(x * SQAURE_SIZE), Math.floor(y * SQAURE_SIZE), SQAURE_SIZE, SQAURE_SIZE);
+      canvasContext.fillRect(Math.floor(x * SQAURE_SIZE) - SQAURE_SIZE, Math.floor(y * SQAURE_SIZE) - SQAURE_SIZE, SQAURE_SIZE, SQAURE_SIZE);
     }
   }
 }
